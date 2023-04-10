@@ -1,0 +1,32 @@
+version: 1
+send_anonymous_usage_stats: false
+project_id: target-timeplus
+default_environment: test
+environments:
+- name: test
+plugins:
+  extractors:
+  - name: tap-smoke-test
+    namespace: tap_smoke_test
+    pip_url: git+https://gitlab.com/meltano/tap-smoke-test.git
+    executable: tap-smoke-test
+    config:
+      streams:
+      - stream_name: animals
+        input_filename: https://gitlab.com/meltano/tap-smoke-test/-/raw/main/demo-data/animals-data.jsonl
+      - stream_name: page_views
+        input_filename: https://gitlab.com/meltano/tap-smoke-test/-/raw/main/demo-data/pageviews-data.jsonl
+  loaders:
+  - name: target-timeplus
+    namespace: target_timeplus
+    pip_url: -e .
+    capabilities:
+    - about
+    - stream-maps
+    - record-flattening
+    settings:
+    - name: endpoint
+    - name: apikey
+      kind: password
+    config:
+      endpoint: https://us.timeplus.cloud/3l9h1jmr
