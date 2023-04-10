@@ -56,23 +56,23 @@ class TimeplusSink(BatchSink):
 
     @staticmethod
     def type_mapping(v) -> str:
-        airbyte_type = v['type']
-        if type(airbyte_type) is list:
-            for t in list(airbyte_type):
+        data_type = v['type']
+        if type(data_type) is list:
+            for t in list(data_type):
                 if t != 'null':
                     type_def = {'type': t}
                     if t == 'array':
                         type_def['items'] = v['items']
                     return TimeplusSink.type_mapping(type_def)
-        if airbyte_type == 'number':
+        if data_type == 'number':
             return 'float'
-        elif airbyte_type == 'integer':
+        elif data_type == 'integer':
             return 'integer'
-        elif airbyte_type == 'boolean':
+        elif data_type == 'boolean':
             return 'bool'
-        elif airbyte_type == 'object':
+        elif data_type == 'object':
             return 'string'
-        elif airbyte_type == 'array':
+        elif data_type == 'array':
             return f"array({TimeplusSink.type_mapping(v['items'])})"
         else:
             return 'string'
