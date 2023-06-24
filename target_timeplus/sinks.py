@@ -6,7 +6,7 @@ from singer_sdk import PluginBase
 from singer_sdk.sinks import BatchSink
 
 from timeplus import Stream, Environment
-
+import json
 
 class TimeplusSink(BatchSink):
     """Timeplus target sink class."""
@@ -18,8 +18,6 @@ class TimeplusSink(BatchSink):
         schema: Dict,
         key_properties: Optional[List[str]],
     ) -> None:
-
-        self.columns = []
 
         super().__init__(target, stream_name, schema, key_properties)
 
@@ -38,10 +36,6 @@ class TimeplusSink(BatchSink):
         self.logger.info(f"__init__ stream_exists:{stream_exists}")
         if not stream_exists:
             TimeplusSink.create_stream(env, stream_name, schema)
-
-        # track the column names for batch data ingestion
-        for name, v in schema['properties'].items():
-            self.columns.append(name.strip())
 
     @staticmethod
     def create_stream(env, stream_name: str, schema: Dict):
@@ -100,10 +94,7 @@ class TimeplusSink(BatchSink):
             record: Individual record in the stream.
             context: Stream partition or context dictionary.
         """
-        row = []
-        for name, v in record.items():
-            row.append(v)
-        self.rows.append(row)
+        self.rows.append(json.dumps(record))
 
     def process_batch(self, context: dict) -> None:
         """Write out any prepped records and return once fully written.
@@ -113,5 +104,4 @@ class TimeplusSink(BatchSink):
         """
         # self.logger.info(f"process_batch stream:{self.stream_name},  {context}")
 
-        Stream(env=self.env).name(self.stream_name.strip()
-                                  ).ingest(self.columns, self.rows)
+        Stream(env=self.env).name(self.stream_name.strip()).ingest(payload='\n'.join(self.rows),format="streaming")

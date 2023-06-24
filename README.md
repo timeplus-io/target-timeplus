@@ -58,7 +58,7 @@ You need to create an API key to access Timeplus REST API. To do so:
 5. Set a readable name and choose an expiration date
 6. Save the API key securely in your computer. You are not going to retrieve the plain text key again in the console.
 
-For more details, please check https://docs.timeplus.com/docs/quickstart-ingest-api 
+For more details, please check https://docs.timeplus.com/quickstart-ingest-api 
 
 ## Usage
 
