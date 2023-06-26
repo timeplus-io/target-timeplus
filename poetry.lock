@@ -1410,13 +1410,13 @@ files = [
 
 [[package]]
 name = "timeplus"
-version = "1.1.2"
+version = "1.3.0b2"
 description = "Timeplus python SDK"
 optional = false
 python-versions = ">=3"
 files = [
-    {file = "timeplus-1.1.2-py3-none-any.whl", hash = "sha256:4090d613b59219bcc94dfe843b0c0553720fc817f04d9e9fb57e893ee16d4cd4"},
-    {file = "timeplus-1.1.2.tar.gz", hash = "sha256:d17bdbe1bed8c2ea7e040e303e253469720c1618e643d4046d07d8d15266d1cd"},
+    {file = "timeplus-1.3.0b2-py3-none-any.whl", hash = "sha256:0114f03e55bb9154000e680bf50fcbe6c2e643ebf5b42d0b639f1b5dad96ab8e"},
+    {file = "timeplus-1.3.0b2.tar.gz", hash = "sha256:c67c94c0d51332e34a967b4a0da2782fa0ef9d91c1d266a08ae56d918cb6d32b"},
 ]
 
 [package.dependencies]
@@ -1424,6 +1424,7 @@ certifi = "*"
 loguru = ">=0.6.0"
 python-dateutil = "*"
 six = ">=1.10"
+sqlalchemy = ">=1.4.36"
 sseclient-py = ">=1.7.2"
 urllib3 = ">=1.15"
 
@@ -1569,4 +1570,4 @@ s3 = ["fs-s3fs"]
 [metadata]
 lock-version = "2.0"
 python-versions = "<3.12,>=3.7.1"
-content-hash = "80e7a909194f478ad47a040d58be0de308a845b2def7afb9706fe78689a282df"
+content-hash = "76a78d0220ec1ed154b5f1903accddf09016df887d07ca48e47070a0137d9cbb"
