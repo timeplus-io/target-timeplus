@@ -7,6 +7,7 @@ from singer_sdk.sinks import BatchSink
 
 from timeplus import Stream, Environment
 import json
+import datetime
 
 class TimeplusSink(BatchSink):
     """Timeplus target sink class."""
@@ -83,6 +84,7 @@ class TimeplusSink(BatchSink):
         # self.logger.info(f"stream:{self.stream_name}, start_batch {context}")
         self.rows = []
 
+    
     def process_record(self, record: dict, context: dict) -> None:
         # self.logger.info(f"process_record stream:{self.stream_name}, record: {record}, and context: {context}")
         """Process the record.
@@ -94,7 +96,13 @@ class TimeplusSink(BatchSink):
             record: Individual record in the stream.
             context: Stream partition or context dictionary.
         """
-        self.rows.append(json.dumps(record))
+        # Define a custom function to serialize datetime objects
+        def serialize_datetime(obj):
+            if isinstance(obj, datetime.datetime):
+                return obj.isoformat()
+            raise TypeError("Type not serializable")
+    
+        self.rows.append(json.dumps(record, default=serialize_datetime))
 
     def process_batch(self, context: dict) -> None:
         """Write out any prepped records and return once fully written.
