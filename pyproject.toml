@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "target-timeplus"
-version = "0.0.5"
+version = "0.0.6"
 description = "`target-timeplus` is a Singer target for Timeplus, built with the Meltano Singer SDK."
 readme = "README.md"
 authors = ["Jove Zhong"]
