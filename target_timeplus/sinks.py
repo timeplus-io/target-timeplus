@@ -105,7 +105,7 @@ class TimeplusSink(BatchSink):
         self.rows.append(json.dumps(record, default=serialize_datetime))
 
         #force flush the batch to avoid sending too much data (over 10MB) to Timeplus
-        if len(self.rows) > 10000:
+        if len(self.rows) > 100:
             self.process_batch()
             self.start_batch()
 
