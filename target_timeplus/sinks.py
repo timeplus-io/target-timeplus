@@ -106,8 +106,8 @@ class TimeplusSink(BatchSink):
 
         #force flush the batch to avoid sending too much data (over 10MB) to Timeplus
         if len(self.rows) > 100:
-            self.process_batch()
-            self.start_batch()
+            self.process_batch(context=dict())
+            self.start_batch(context=dict())
 
     def process_batch(self, context: dict) -> None:
         """Write out any prepped records and return once fully written.
